@@ -251,7 +251,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.4mtt.me/2017/05/27/helloWorld/">
+    <link itemprop="mainEntityOfPage" href="http://www.4mtt.me/2017/05/15/linux软件-tftpd-hpa/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -270,7 +270,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/27/helloWorld/" itemprop="url">helloWorld</a></h1>
+                <a class="post-title-link" href="/2017/05/15/linux软件-tftpd-hpa/" itemprop="url">linux软件-tftpd-hpa</a></h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-27T23:08:36+08:00">
-                2017-05-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-15T00:00:00+08:00">
+                2017-05-15
               </time>
             
 
@@ -292,6 +292,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux软件/" itemprop="url" rel="index">
+                    <span itemprop="name">linux软件</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -318,10 +340,14 @@
 
       
         
-          
-            <p>#include <stdio.h><br>int main(void)<br>{<br>    printf(“hello World”);<br>    return 0;<br>}</stdio.h></p>
-
-          
+          <p><strong><em>tftpd-hpa</em></strong><br>是一个功能增强的TFPT服务器<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/15/linux软件-tftpd-hpa/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -363,7 +389,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.4mtt.me/2017/05/27/linux串口工具-kermit/">
+    <link itemprop="mainEntityOfPage" href="http://www.4mtt.me/2017/05/10/linux串口工具-kermit/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -382,7 +408,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/27/linux串口工具-kermit/" itemprop="url">linux串口工具-kermit</a></h1>
+                <a class="post-title-link" href="/2017/05/10/linux串口工具-kermit/" itemprop="url">linux串口工具-kermit</a></h1>
         
 
         <div class="post-meta">
@@ -394,8 +420,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-27T00:00:00+08:00">
-                2017-05-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-10T00:00:00+08:00">
+                2017-05-10
               </time>
             
 
@@ -430,137 +456,14 @@
 
       
         
-          
-            <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><strong>sudo apt-get install ckermit</strong></p>
-<h2 id="获取linux下的串口号"><a href="#获取linux下的串口号" class="headerlink" title="获取linux下的串口号"></a>获取linux下的串口号</h2><pre><code>1：插入USB转串口线
-</code></pre><p>2：执行<em>dmesg</em>,获取打印信息<br><img src="http://oqlam1imo.bkt.clouddn.com/usb_ttyUSB0.png" alt="ttyUSB0"><br>    3：根据串口设备文件名修改配置文件<strong>.kermrc</strong></p>
-<h2 id="配置-kermrc"><a href="#配置-kermrc" class="headerlink" title="配置.kermrc"></a>配置<strong>.kermrc</strong></h2><pre><code>set line        /dev/ttyUSB0
-set speed        115200
-set carrier-watch     off
-set handshake        none
-set flow-control    none
-robust
-set file type        bin
-set file name        lit
-set rec pack        1000
-set send pack        1000
-set window        5
-</code></pre><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p><strong>sudo kermit -c</strong></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.4mtt.me/2017/05/27/linux命令-tree/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="4mtt">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/27/linux命令-tree/" itemprop="url">linux命令-tree</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-27T00:00:00+08:00">
-                2017-05-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="tree-以树形形式列出当前目录下所有深度级别的文件和目录"><a href="#tree-以树形形式列出当前目录下所有深度级别的文件和目录" class="headerlink" title="tree :以树形形式列出当前目录下所有深度级别的文件和目录"></a>tree :以树形形式列出当前目录下所有深度级别的文件和目录</h3><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p><strong><em>sudo apt-get install tree</em></strong></p>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p><strong>tree -L 2</strong><br>        查看当前第2级的目录和文件(tree -L N)<br>      <img src="http://oqlam1imo.bkt.clouddn.com/2017-05-27%2010-12-14%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" alt="tree"><br><strong>tree -L 2 &gt; tree.txt</strong><br>        以树形形式保存到tree.txt中</p>
-
-          
+          <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><strong>sudo apt-get install ckermit</strong><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/10/linux串口工具-kermit/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -669,41 +572,240 @@ set window        5
 
       
         
+          <p><em>deb是debian linux的安装格式,最基本的安装命令:</em><br><em>dpkg -i file.deb</em></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/27/deb格式软件安装/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.4mtt.me/2017/01/21/linux命令-tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="4mtt">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/21/linux命令-tree/" itemprop="url">linux命令-tree</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
+                2017-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-            <p><em>deb是debian linux的安装格式,最基本的安装命令:</em><br><em>dpkg -i file.deb</em></p>
-<p><strong>dpkg是DebianPackage的简写,为Debian的套件管理系统.</strong></p>
-<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>  1:<strong>dpkg -i file.deb</strong></p>
-<blockquote>
-<p>安装一个Debian软件包</p>
-</blockquote>
-<p>2:<strong>dpkg -c file.deb</strong></p>
-<blockquote>
-<p>列出软件包的内容</p>
-</blockquote>
-<p>3:<strong>dpkg -I file.deb</strong></p>
-<blockquote>
-<p>提取包裹信息</p>
-</blockquote>
-<p>4:<strong>dpkg -r file</strong></p>
-<blockquote>
-<p>移除已安装的软件包</p>
-</blockquote>
-<p>5:<strong>dpkg -P file</strong></p>
-<blockquote>
-<p>完全清除已安装的软件包</p>
-</blockquote>
-<p>6:<strong>dpkg -L file</strong></p>
-<blockquote>
-<p>列出file安装的所有文件清单</p>
-</blockquote>
-<p>7:<strong>dpkg -s file</strong></p>
-<blockquote>
-<p>显示已安装软件包的信息</p>
-</blockquote>
-<p>8:<strong>dpkg-reconfigure file</strong></p>
-<blockquote>
-<p>重新配置已安装的包裹,若他使用的是debconf(为包裹安装提供了一个统一的配置界面)</p>
-</blockquote>
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="tree-以树形形式列出当前目录下所有深度级别的文件和目录"><a href="#tree-以树形形式列出当前目录下所有深度级别的文件和目录" class="headerlink" title="tree :以树形形式列出当前目录下所有深度级别的文件和目录"></a>tree :以树形形式列出当前目录下所有深度级别的文件和目录</h3><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p><strong><em>sudo apt-get install tree</em></strong><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/01/21/linux命令-tree/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.4mtt.me/2016/08/01/helloWorld/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="4mtt">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/08/01/helloWorld/" itemprop="url">helloWorld</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-01T00:00:00+08:00">
+                2016-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>#include <stdio.h><br>int main(void)<br>{<br>    printf(“hello World”);<br>    return 0;<br>}</stdio.h></p>
 
           
         
@@ -783,12 +885,21 @@ set window        5
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
 
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
           
 
           
