@@ -90,20 +90,23 @@
 
 
 
-<meta name="description" content="用qemu虚拟机调试内核可以让cpu处于冻结状态,从而让操作系统处于暂停状态,这样我们就能很方便的调试内核">
+<meta name="description" content="环境: ubuntu16.4x6818开发板预装交叉编译器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux调试工具-qemu">
-<meta property="og:url" content="http://www.4mtt.me/2017/05/15/linux调试工具-qemu-gdb/index.html">
+<meta property="og:title" content="嵌入式linux开发-uboot">
+<meta property="og:url" content="http://www.4mtt.me/2017/05/20/嵌入式linux开发-uboot/index.html">
 <meta property="og:site_name" content="4mtt">
-<meta property="og:description" content="用qemu虚拟机调试内核可以让cpu处于冻结状态,从而让操作系统处于暂停状态,这样我们就能很方便的调试内核">
-<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/qemu-arm.png">
-<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/gdb-arm.png">
-<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/reg-info.png">
-<meta property="og:updated_time" content="2017-05-27T13:17:03.510Z">
+<meta property="og:description" content="环境: ubuntu16.4x6818开发板预装交叉编译器">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/make-dist.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/x6818_config.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/makeuboot.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/make-txt.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/uboot-lds.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/lds.png">
+<meta property="og:updated_time" content="2017-05-29T05:17:05.298Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="linux调试工具-qemu">
-<meta name="twitter:description" content="用qemu虚拟机调试内核可以让cpu处于冻结状态,从而让操作系统处于暂停状态,这样我们就能很方便的调试内核">
-<meta name="twitter:image" content="http://oqlam1imo.bkt.clouddn.com/qemu-arm.png">
+<meta name="twitter:title" content="嵌入式linux开发-uboot">
+<meta name="twitter:description" content="环境: ubuntu16.4x6818开发板预装交叉编译器">
+<meta name="twitter:image" content="http://oqlam1imo.bkt.clouddn.com/make-dist.png">
 
 
 
@@ -131,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://www.4mtt.me/2017/05/15/linux调试工具-qemu-gdb/"/>
+  <link rel="canonical" href="http://www.4mtt.me/2017/05/20/嵌入式linux开发-uboot/"/>
 
 
 
 
 
-  <title>linux调试工具-qemu | 4mtt</title>
+  <title>嵌入式linux开发-uboot | 4mtt</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -257,7 +260,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.4mtt.me/2017/05/15/linux调试工具-qemu-gdb/">
+    <link itemprop="mainEntityOfPage" href="http://www.4mtt.me/2017/05/20/嵌入式linux开发-uboot/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -274,7 +277,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">linux调试工具-qemu</h1>
+          <h1 class="post-title" itemprop="name headline">嵌入式linux开发-uboot</h1>
         
 
         <div class="post-meta">
@@ -286,8 +289,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-15T00:00:00+08:00">
-                2017-05-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-20T00:00:00+08:00">
+                2017-05-20
               </time>
             
 
@@ -309,8 +312,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux软件/" itemprop="url" rel="index">
-                    <span itemprop="name">linux软件</span>
+                  <a href="/categories/嵌入式开发/" itemprop="url" rel="index">
+                    <span itemprop="name">嵌入式开发</span>
                   </a>
                 </span>
 
@@ -343,34 +346,36 @@
       
 
       
-        <ul>
-<li>用qemu虚拟机调试内核可以让cpu处于冻结状态,从而让操作系统处于暂停状态,这样我们就能很方便的调试内核</li>
-</ul>
+        <h1 id="环境"><a href="#环境" class="headerlink" title="环境:"></a>环境:</h1><blockquote>
+<p>ubuntu16.4<br>x6818开发板<br><a href="http://www.4mtt.me/2017/05/02/ARM-cortex-A9%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%99%A8/">预装交叉编译器</a></p>
+</blockquote>
 <a id="more"></a>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>&ensp;&ensp;<em>sudo apt-get install qemu</em></p>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><blockquote>
-<p>x6818开发板<br>交叉编译器arm-cortex_a9-linux-gnueabi    </p>
+<h1 id="uboot功能"><a href="#uboot功能" class="headerlink" title="uboot功能"></a>uboot功能</h1><blockquote>
+<p>1.硬件初始化<br>2.加载内核到内存,并且启动内核<br>3.在内核正式启动之前,给内核传递启动参数</p>
 </blockquote>
-<ol>
-<li>创建目标板汇编程序<br> .text<br> .code 32<br> .global _start<br> _start:<br> &ensp;&ensp;&ensp;&ensp;mov r0, #0<br> &ensp;&ensp;&ensp;&ensp;mov r1, #2<br> &ensp;&ensp;&ensp;&ensp;mov r2, #9<br> &ensp;&ensp;&ensp;&ensp;subs r0, r1, r2<br> &ensp;&ensp;&ensp;&ensp;b .<br> .end</li>
-<li>生成目标文件<br><strong>arm-cortex_a9-linux-gnueabi-as -g -o sub.o sub.s</strong>    <blockquote>
-<p>arm…as:汇编器,将汇编文件编译生成目标文件<br>-g:添加调试信息    </p>
-</blockquote>
-</li>
-<li>生成二进制文件<br><strong>arm-cortex_a9-linux-gnueabi-ld -o sub sub.o</strong>    </li>
-<li><p>终端执行<br><img src="http://oqlam1imo.bkt.clouddn.com/qemu-arm.png" alt="qemu-arm">        </p>
-<blockquote>
-<p>执行qemu-arm模拟器,将来用于运行sub,并且指定端口号为1234     </p>
-</blockquote>
-</li>
-<li><p>另开终端<br><strong>arm-cortex_a9-linux-gnueabi-gdb sub</strong><br><em>出现“(gdb)”命令提示符,输入命令调试:</em><br><img src="http://oqlam1imo.bkt.clouddn.com/gdb-arm.png" alt="gdb-arm">    </p>
-<blockquote>
-<p>target remote localhost:1234 &ensp;&ensp;//让gdb连接qemu<br>l&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;//查看代码<br>b&ensp;&ensp;5 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;//在第五行设置一个断点<br>s &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;//让CPU执行下一条指令,单步执行<br>info &ensp;&ensp;reg &ensp;&ensp;//查看ARM寄存器的值</p>
-</blockquote>
-<p> <img src="http://oqlam1imo.bkt.clouddn.com/reg-info.png" alt=""></p>
-</li>
-</ol>
+<h1 id="1-获取uboot源码"><a href="#1-获取uboot源码" class="headerlink" title="1. 获取uboot源码"></a>1. 获取uboot源码</h1><h1 id="2-源码编译测试"><a href="#2-源码编译测试" class="headerlink" title="2. 源码编译测试"></a>2. 源码编译测试</h1><center><strong>获得干净的源码</strong></center><br><center><img src="http://oqlam1imo.bkt.clouddn.com/make-dist.png" alt="获得干净的源码"></center>    
 
+<center><strong>配置源码使其支持x6818</strong></center><br><center><img src="http://oqlam1imo.bkt.clouddn.com/x6818_config.png" alt="源码配置"></center>    
+
+<center><strong>编译</strong></center><br><center><img src="http://oqlam1imo.bkt.clouddn.com/makeuboot.png" alt="编译"></center>    
+
+<p>&ensp;&ensp;<big><em>make</em>后，获得ubootpak.bin.无错误出现</big><br>&ensp;&ensp;<big>说明源码无误,且和交叉编译器匹配</big></p>
+<h1 id="3-根据链接脚本获取相关信息"><a href="#3-根据链接脚本获取相关信息" class="headerlink" title="3. 根据链接脚本获取相关信息"></a>3. 根据链接脚本获取相关信息</h1><h3 id="ensp-ensp-根据uboot的编译链接脚本获取："><a href="#ensp-ensp-根据uboot的编译链接脚本获取：" class="headerlink" title="&ensp;&ensp;根据uboot的编译链接脚本获取："></a>&ensp;&ensp;根据uboot的编译链接脚本获取：</h3><blockquote>
+<p>1.运行的入口函数<br>2.运行的第一个文件<br>3.运行的内存起始地址    </p>
+</blockquote>
+<h3 id="ensp-ensp-uboot链接脚本的获取"><a href="#ensp-ensp-uboot链接脚本的获取" class="headerlink" title="&ensp;&ensp;uboot链接脚本的获取"></a>&ensp;&ensp;uboot链接脚本的获取</h3><p><center><strong>将详细的编译过程导入到txt中</strong></center></p>
+<p><center><img src="http://oqlam1imo.bkt.clouddn.com/make-txt.png" alt="make.txt"></center></p>
+<p><center><strong>vim中搜索”-Ttext”关键字</strong></center></p>
+<p><center><img src="http://oqlam1imo.bkt.clouddn.com/uboot-lds.png" alt=""></center></p>
+<blockquote>
+<p>uboot运行的起始内存地址为0x43c00000<br>链接脚本为u-boot.lds    </p>
+</blockquote>
+<h4 id="ensp-ensp-进入链接脚本"><a href="#ensp-ensp-进入链接脚本" class="headerlink" title="&ensp;&ensp;进入链接脚本"></a>&ensp;&ensp;进入链接脚本</h4><p><center><img src="http://oqlam1imo.bkt.clouddn.com/lds.png" alt="链接脚本"></center></p>
+<blockquote>
+<p>uboot运行的第一个入口函数为:_stext<br>uboot运行的第一个文件为:arch/arm/cpu/slsiap/s5p6818/start.S    </p>
+</blockquote>
+<h1 id="4-利用ctags理顺uboot的执行流程"><a href="#4-利用ctags理顺uboot的执行流程" class="headerlink" title="4. 利用ctags理顺uboot的执行流程"></a>4. 利用<em>ctags</em>理顺uboot的执行流程</h1><p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<a href="http://oqlam1imo.bkt.clouddn.com/Uboot%E8%AF%A6%E8%A7%A3.bmp" target="_blank" rel="external">uboot思维导图</a></p>
+<h1 id="5-编译完成后烧写到SD卡"><a href="#5-编译完成后烧写到SD卡" class="headerlink" title="5. 编译完成后烧写到SD卡"></a>5. 编译完成后烧写到SD卡</h1>
       
     </div>
 
@@ -406,8 +411,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/15/linux软件-tftpd-hpa/" rel="next" title="linux软件-tftpd-hpa">
-                <i class="fa fa-chevron-left"></i> linux软件-tftpd-hpa
+              <a href="/2017/05/15/linux调试工具-qemu-gdb/" rel="next" title="linux调试工具-qemu">
+                <i class="fa fa-chevron-left"></i> linux调试工具-qemu
               </a>
             
           </div>
@@ -416,8 +421,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/20/嵌入式linux开发-uboot/" rel="prev" title="嵌入式linux开发-uboot">
-                嵌入式linux开发-uboot <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/27/计算机图像处理-画线算法/" rel="prev" title="计算机图形学-画线算法">
+                计算机图形学-画线算法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -538,7 +543,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">2.</span> <span class="nav-text">测试</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#uboot功能"><span class="nav-number">2.</span> <span class="nav-text">uboot功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-获取uboot源码"><span class="nav-number">3.</span> <span class="nav-text">1. 获取uboot源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-源码编译测试"><span class="nav-number">4.</span> <span class="nav-text">2. 源码编译测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-根据链接脚本获取相关信息"><span class="nav-number">5.</span> <span class="nav-text">3. 根据链接脚本获取相关信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ensp-ensp-根据uboot的编译链接脚本获取："><span class="nav-number">5.0.1.</span> <span class="nav-text">  根据uboot的编译链接脚本获取：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ensp-ensp-uboot链接脚本的获取"><span class="nav-number">5.0.2.</span> <span class="nav-text">  uboot链接脚本的获取</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ensp-ensp-进入链接脚本"><span class="nav-number">5.0.2.1.</span> <span class="nav-text">  进入链接脚本</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-利用ctags理顺uboot的执行流程"><span class="nav-number">6.</span> <span class="nav-text">4. 利用ctags理顺uboot的执行流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-编译完成后烧写到SD卡"><span class="nav-number">7.</span> <span class="nav-text">5. 编译完成后烧写到SD卡</span></a></li></ol></div>
             
 
           </div>
