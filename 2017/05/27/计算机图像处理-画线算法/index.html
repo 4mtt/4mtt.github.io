@@ -90,16 +90,18 @@
 
 
 
-<meta name="description" content="算法原理直线的笛卡尔斜率截距方程:$$x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$  m表示直线的斜率b为y轴截距">
+<meta name="description" content="算法原理直线的笛卡尔斜率截距方程:$$y=mx+b$$  m表示直线的斜率b为y轴截距">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机图形学-画线算法">
 <meta property="og:url" content="http://www.4mtt.me/2017/05/27/计算机图像处理-画线算法/index.html">
 <meta property="og:site_name" content="4mtt">
-<meta property="og:description" content="算法原理直线的笛卡尔斜率截距方程:$$x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$  m表示直线的斜率b为y轴截距">
-<meta property="og:updated_time" content="2017-05-29T06:41:31.891Z">
+<meta property="og:description" content="算法原理直线的笛卡尔斜率截距方程:$$y=mx+b$$  m表示直线的斜率b为y轴截距">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%9D%90%E6%A0%87.png">
+<meta property="og:updated_time" content="2017-05-30T03:35:15.165Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机图形学-画线算法">
-<meta name="twitter:description" content="算法原理直线的笛卡尔斜率截距方程:$$x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$  m表示直线的斜率b为y轴截距">
+<meta name="twitter:description" content="算法原理直线的笛卡尔斜率截距方程:$$y=mx+b$$  m表示直线的斜率b为y轴截距">
+<meta name="twitter:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%9D%90%E6%A0%87.png">
 
 
 
@@ -340,13 +342,16 @@
 
       
         <p></p>
-<h1 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h1><h3 id="直线的笛卡尔斜率截距方程"><a href="#直线的笛卡尔斜率截距方程" class="headerlink" title="直线的笛卡尔斜率截距方程:"></a>直线的笛卡尔斜率截距方程:</h3><p>$$x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$</p>
+<h1 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h1><h2 id="直线的笛卡尔斜率截距方程"><a href="#直线的笛卡尔斜率截距方程" class="headerlink" title="直线的笛卡尔斜率截距方程:"></a>直线的笛卡尔斜率截距方程:</h2><p>$$y=mx+b$$</p>
 <blockquote>
 <p>m表示直线的斜率<br>b为y轴截距    </p>
 </blockquote>
 <a id="more"></a>
-<h1 id="Bresenham画线算法"><a href="#Bresenham画线算法" class="headerlink" title="Bresenham画线算法"></a>Bresenham画线算法</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">lcd_draw_line</span><span class="params">(<span class="keyword">int</span> startx, <span class="keyword">int</span> starty, <span class="keyword">int</span> endx, <span class="keyword">int</span> endy)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> dx = (endx - startx)&gt;<span class="number">0</span>?(endx - startx):(startx-endx);</div><div class="line">    <span class="keyword">int</span> dy = (endy - starty)&gt;<span class="number">0</span>?(endy - starty):(starty-endy);</div><div class="line">    <span class="keyword">int</span> twoDy = <span class="number">2</span> * dy;</div><div class="line">    <span class="keyword">int</span> twoDxy = twoDy - <span class="number">2</span>*dx;</div><div class="line">    <span class="keyword">int</span> p = twoDy - dx;</div><div class="line">    <span class="keyword">int</span> x, y;</div><div class="line">    <span class="keyword">if</span>(startx &gt; endx)</div><div class="line">    &#123;</div><div class="line">        x = endx;</div><div class="line">        y = endy;</div><div class="line">        endx = startx;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        x = startx;</div><div class="line">        y = starty;</div><div class="line">    &#125;</div><div class="line">    lcd_draw_pixel(x,y);</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(dx &gt; dy)</div><div class="line">    &#123;</div><div class="line">      <span class="keyword">while</span>(x &lt; endx)</div><div class="line">      &#123;</div><div class="line">          x++;</div><div class="line">          <span class="keyword">if</span>(p &lt; <span class="number">0</span>)</div><div class="line">          &#123;</div><div class="line">              p += twoDy;</div><div class="line">          &#125;</div><div class="line">          <span class="keyword">else</span></div><div class="line">          &#123;</div><div class="line">              y++;</div><div class="line">              p += twoDxy;</div><div class="line">          &#125;</div><div class="line">          lcd_draw_pixel(x,y);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(dx &lt; dy)</div><div class="line">    &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">while</span>(x &lt; endx)</div><div class="line">        &#123;</div><div class="line">            x++;</div><div class="line">            y++;</div><div class="line">            lcd_draw_pixel(x,y);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%9D%90%E6%A0%87.png" alt="坐标"></center><br>### 对于上图所示线段的两个端点($x$<sub>0</sub>,$y$<sub>0</sub>)和($x$<sub>end</sub>,$y$<sub>end</sub>)，可以计算斜率$m$和$y$轴截距$b$：<br>$$m=\dfrac{y_{end}-y<em>0}{x</em>{end}-x_0}$$<br>$$b=y_0-mx_0$$<br>### 对于任何沿直线给定的$x$增量$\delta x$，可计算出对应的$y$增量$\delta y$：<br>$$\delta y=m\delta x$$<br>## 在光栅系统中,通过像素绘制直线,水平和垂直方向的步长受到<em>像素的间距</em>的限制.必须在离散位置上对直线取样,并<em>在每个取样位置上确定距直线最近的像素</em>.<br><br>—-<br># Bresenham画线算法<br><center><strong>该画线算法是由Bresenham提出的一种精确而有效的光栅线生成算法,概算法仅使用增量整数计算.该算法还可用于画圆和曲线.</strong></center>
 
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">lcd_draw_line</span><span class="params">(<span class="keyword">int</span> startx, <span class="keyword">int</span> starty, <span class="keyword">int</span> endx, <span class="keyword">int</span> endy)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> dx = (endx - startx)&gt;<span class="number">0</span>?(endx - startx):(startx-endx);</div><div class="line">    <span class="keyword">int</span> dy = (endy - starty)&gt;<span class="number">0</span>?(endy - starty):(starty-endy);</div><div class="line">    <span class="keyword">int</span> twoDy = <span class="number">2</span> * dy;</div><div class="line">    <span class="keyword">int</span> twoDxy = twoDy - <span class="number">2</span>*dx;</div><div class="line">    <span class="keyword">int</span> p = twoDy - dx;</div><div class="line">    <span class="keyword">int</span> x, y;</div><div class="line">    <span class="keyword">if</span>(startx &gt; endx)</div><div class="line">    &#123;</div><div class="line">        x = endx;</div><div class="line">        y = endy;</div><div class="line">        endx = startx;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        x = startx;</div><div class="line">        y = starty;</div><div class="line">    &#125;</div><div class="line">    lcd_draw_pixel(x,y);</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(dx &gt; dy)</div><div class="line">    &#123;</div><div class="line">      <span class="keyword">while</span>(x &lt; endx)</div><div class="line">      &#123;</div><div class="line">          x++;</div><div class="line">          <span class="keyword">if</span>(p &lt; <span class="number">0</span>)</div><div class="line">          &#123;</div><div class="line">              p += twoDy;</div><div class="line">          &#125;</div><div class="line">          <span class="keyword">else</span></div><div class="line">          &#123;</div><div class="line">              y++;</div><div class="line">              p += twoDxy;</div><div class="line">          &#125;</div><div class="line">          lcd_draw_pixel(x,y);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(dx &lt; dy)</div><div class="line">    &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">while</span>(x &lt; endx)</div><div class="line">        &#123;</div><div class="line">            x++;</div><div class="line">            y++;</div><div class="line">            lcd_draw_pixel(x,y);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="上述代码在x6818开发板通过测试"><a href="#上述代码在x6818开发板通过测试" class="headerlink" title="上述代码在x6818开发板通过测试"></a><center>上述代码在x6818开发板通过测试</center></h3>
       
     </div>
 
@@ -382,8 +387,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/20/嵌入式linux开发-uboot/" rel="next" title="嵌入式linux开发-uboot">
-                <i class="fa fa-chevron-left"></i> 嵌入式linux开发-uboot
+              <a href="/2017/05/15/linux调试工具-qemu-gdb/" rel="next" title="linux调试工具-qemu">
+                <i class="fa fa-chevron-left"></i> linux调试工具-qemu
               </a>
             
           </div>
@@ -391,6 +396,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/30/端午安康/" rel="prev" title="端午安康">
+                端午安康 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -510,7 +519,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法原理"><span class="nav-number">1.</span> <span class="nav-text">算法原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#直线的笛卡尔斜率截距方程"><span class="nav-number">1.0.1.</span> <span class="nav-text">直线的笛卡尔斜率截距方程:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bresenham画线算法"><span class="nav-number">2.</span> <span class="nav-text">Bresenham画线算法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法原理"><span class="nav-number">1.</span> <span class="nav-text">算法原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#直线的笛卡尔斜率截距方程"><span class="nav-number">1.1.</span> <span class="nav-text">直线的笛卡尔斜率截距方程:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#上述代码在x6818开发板通过测试"><span class="nav-number">1.1.1.</span> <span class="nav-text">上述代码在x6818开发板通过测试</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
