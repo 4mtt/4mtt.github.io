@@ -1,0 +1,821 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="BusyBox的诞生 BusyBox 最初是由 Bruce Perens 在 1996 年为 Debian GNU/Linux 安装盘编写的。 其目标是在一张软盘上创建一个可引导的 GNU/Linux 系统，这可以用作安装盘和急救盘。一张软盘可保存约 1.4-1.7MB的内容，因此没有多少空间留给 Linux 内核及相关的用户应用程序使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BusyBox制作根文件系统">
+<meta property="og:url" content="http://www.4mtt.me/2017/05/31/busybox详解/index.html">
+<meta property="og:site_name" content="4mtt">
+<meta property="og:description" content="BusyBox的诞生 BusyBox 最初是由 Bruce Perens 在 1996 年为 Debian GNU/Linux 安装盘编写的。 其目标是在一张软盘上创建一个可引导的 GNU/Linux 系统，这可以用作安装盘和急救盘。一张软盘可保存约 1.4-1.7MB的内容，因此没有多少空间留给 Linux 内核及相关的用户应用程序使用。">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fvim-makefile.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Farch.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fcross.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Flinux-model.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/simpli.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Finstall.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Frootfs.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fmkdir.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Flib.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fwhich.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Ffindlib.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Flibc-so.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Flib-libc.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Flibcm.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fld-.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fld-lib.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fvim-inittab.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Finittab.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Finit-rcs.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fvim-rcs.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fetc-fstab.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fvim-fsta.png">
+<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/du-rootfs.png">
+<meta property="og:updated_time" content="2017-05-31T07:24:21.663Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BusyBox制作根文件系统">
+<meta name="twitter:description" content="BusyBox的诞生 BusyBox 最初是由 Bruce Perens 在 1996 年为 Debian GNU/Linux 安装盘编写的。 其目标是在一张软盘上创建一个可引导的 GNU/Linux 系统，这可以用作安装盘和急救盘。一张软盘可保存约 1.4-1.7MB的内容，因此没有多少空间留给 Linux 内核及相关的用户应用程序使用。">
+<meta name="twitter:image" content="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fvim-makefile.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.4mtt.me/2017/05/31/busybox详解/"/>
+
+
+
+
+
+  <title>BusyBox制作根文件系统 | 4mtt</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">4mtt</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.4mtt.me/2017/05/31/busybox详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="4mtt">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BusyBox制作根文件系统</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-31T00:00:00+08:00">
+                2017-05-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/嵌入式/" itemprop="url" rel="index">
+                    <span itemprop="name">嵌入式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="BusyBox的诞生"><a href="#BusyBox的诞生" class="headerlink" title="BusyBox的诞生"></a>BusyBox的诞生</h1><ul>
+<li>BusyBox 最初是由 Bruce Perens 在 1996 年为 Debian GNU/Linux 安装盘编写的。<br> 其目标是在一张软盘上创建一个可引导的 GNU/Linux 系统，这可以用作安装盘和急救盘。<br>一张软盘可保存约 1.4-1.7MB的内容，因此没有多少空间留给 Linux 内核及相关的用户应用程序使用。     </li>
+</ul>
+<a id="more"></a>
+<h1 id="1-源码获取"><a href="#1-源码获取" class="headerlink" title="1. 源码获取"></a>1. 源码获取</h1><center><a href="https://busybox.net/" target="_blank" rel="external"><font color="#00f02a" size="10px">busybox</font></a></center>
+
+<h1 id="2-交叉编译准备"><a href="#2-交叉编译准备" class="headerlink" title="2. 交叉编译准备"></a>2. 交叉编译准备</h1><ol>
+<li>下载需要的交叉编译器，并添加路径    </li>
+<li>交叉编译：<br>进入解压后的源码包,打开Makefile文件    <center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fvim-makefile.png" alt=""></center><br>指定架构和交叉编译器<br><center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Farch.png" alt=""></center><br><center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fcross.png" alt=""></center>
+
+</li>
+</ol>
+<h1 id="3-配置busybox源码"><a href="#3-配置busybox源码" class="headerlink" title="3. 配置busybox源码"></a>3. 配置busybox源码</h1><ul>
+<li>运行: <strong>make menuconfig</strong>    </li>
+<li>找到：    <center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Flinux-model.png" alt=""></center></li>
+<li>进入后修改为：    <center><img src="http://oqlam1imo.bkt.clouddn.com/simpli.png" alt=""></center>
+
+</li>
+</ul>
+<h1 id="4-交叉编译源码"><a href="#4-交叉编译源码" class="headerlink" title="4. 交叉编译源码"></a>4. 交叉编译源码</h1><ul>
+<li>执行：<strong>make</strong></li>
+<li>执行：<strong>make install</strong></li>
+</ul>
+<h1 id="5-创建目录"><a href="#5-创建目录" class="headerlink" title="5. 创建目录"></a>5. 创建目录</h1><ul>
+<li>源码编译后会生成<em>_install</em>目录<center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Finstall.png" alt=""></center></li>
+<li>该文件下所有的命令为软连接文件,连接到_install/bin/busybox.<br>也就是编译busybox本质就是生成了一个可执行文件bin/busybox</li>
+<li>自行创建一个目录(rootfs),并将_install下的文件拷贝到rootfs<center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Frootfs.png" alt=""></center></li>
+<li>创建必要目录<ul>
+<li>mkdir dev lib etc proc sys</li>
+</ul>
+</li>
+<li>创建可选目录<ul>
+<li>mkdir home tmp var mnt<center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fmkdir.png" alt=""></center>
+
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="6-添加动态库"><a href="#6-添加动态库" class="headerlink" title="6. 添加动态库"></a>6. 添加动态库</h1><ol>
+<li><p><big>获取一个应用程序运行时所需的动态库</big>：<br><center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Flib.png" alt=""></center></p>
+<ul>
+<li>共享库：[libm.so.6] //标准数学运算库</li>
+<li>共享库：[libc.so.6] //标准C库<br><strong>busybox所需的动态库为:libm.so.6和libc.so.6</strong></li>
+</ul>
+</li>
+<li><p><big>添加动态库到根文件系统rootfs的lib目录下</big></p>
+<ul>
+<li>获取编译busybox的交叉编译器的路径<center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fwhich.png" alt=""></center></li>
+<li>进入该目录,找到库所在<center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Ffindlib.png" alt=""></center><br><center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Flibc-so.png" alt=""></center></li>
+<li>将libc.so.6()和其实体文件拷贝至根文件系统rootfs的lib目录下<center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Flib-libc.png" alt=""></center></li>
+<li>同理,添加libm.so.6动态库<center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Flibcm.png" alt=""></center>
+</li>
+</ul>
+</li>
+<li><p><big>添加动态库使用时所需的加载器</big>    </p>
+<ul>
+<li>获取加载器<br><center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fld-.png" alt=""></center><ul>
+<li>拷贝至根文件系统rootfs的lib目录<br><center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fld-lib.png" alt=""></center><font color="#ff0f5f" size="4px">根文件系统rootfs的lib目录下仅存放从交叉编译器中拷贝的动态库(标准的动态库(系统库)),自己移植其他开源软件获取的动态库或自己制作的动态库不能放到根文件系统rootfs的lib目录下</font>
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="7-添加系统启动的必要配置文件和脚本文件"><a href="#7-添加系统启动的必要配置文件和脚本文件" class="headerlink" title="7. 添加系统启动的必要配置文件和脚本文件"></a>7. 添加系统启动的必要配置文件和脚本文件</h1><p>1.<big>inittab配置文件</big><br>   <center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fvim-inittab.png" alt=""></center><br>   <center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Finittab.png" alt=""></center><br>2.<big>系统启动脚本文件rcS</big><br>   <center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Finit-rcs.png" alt=""></center><br>   <center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fvim-rcs.png" alt=""></center><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mount -a:系统会自动解析fstab配置文件,系统根据此配置文件进行一系列的挂接动作    </div><div class="line">mount -t devpts devpts /dev/pts：将虚拟文件系统devpts挂接到/dev/pts目录下</div><div class="line">                                 将来/dev/pts目录就可作为devpts虚拟文件系统的入口</div><div class="line">                                 此命令用于将来可以远程登录开发板,例如：telnet</div><div class="line">echo /sbin/mdev &gt; /proc/sys/kernel/hotplug：向文件/proc/sys/kernel/hotplug写入字符串&quot;/sbin/mdev&quot; </div><div class="line">                                           告诉内核驱动将来创建设备文件的程序是/sbin/mdev</div><div class="line">mdev -s:系统启动,将内核驱动对应的设备文件进行自动创建</div></pre></td></tr></table></figure></p>
+<p>3.<big>系统启动的配置文件fstab</big><br>  <center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fetc-fstab.png" alt=""></center><br>  <center><img src="http://oqlam1imo.bkt.clouddn.com/%E5%B5%8C%E5%85%A5%E5%BC%8Fvim-fsta.png" alt=""></center></p>
+<blockquote>
+<p>第一列：表示要挂接的设备<br>第二列：表示挂接点,将来的入口<br>第三列：表示指定的文件系统格式<br>第四,五,六：分别指定访问权限<br>/proc,/sys,/dev/分别作为procfs,sysfs,tmpfs三种虚拟文件系统的入口<br>且以上三种虚拟文件系统创建的内容由内核来创建,并分别创建到/proc,/sys,/dev/目录中<br>三个目录下由内核创建的内容,都是存在于内存中,掉电丢失!    </p>
+</blockquote>
+<h1 id="8-精简rootfs的体积"><a href="#8-精简rootfs的体积" class="headerlink" title="8. 精简rootfs的体积"></a>8. 精简rootfs的体积</h1>  <center><img src="http://oqlam1imo.bkt.clouddn.com/du-rootfs.png" alt=""></center>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/31/根文件系统添加自定义动态库/" rel="next" title="根文件系统添加自定义动态库">
+                <i class="fa fa-chevron-left"></i> 根文件系统添加自定义动态库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#BusyBox的诞生"><span class="nav-number">1.</span> <span class="nav-text">BusyBox的诞生</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-源码获取"><span class="nav-number">2.</span> <span class="nav-text">1. 源码获取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-交叉编译准备"><span class="nav-number">3.</span> <span class="nav-text">2. 交叉编译准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-配置busybox源码"><span class="nav-number">4.</span> <span class="nav-text">3. 配置busybox源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-交叉编译源码"><span class="nav-number">5.</span> <span class="nav-text">4. 交叉编译源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-创建目录"><span class="nav-number">6.</span> <span class="nav-text">5. 创建目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-添加动态库"><span class="nav-number">7.</span> <span class="nav-text">6. 添加动态库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-添加系统启动的必要配置文件和脚本文件"><span class="nav-number">8.</span> <span class="nav-text">7. 添加系统启动的必要配置文件和脚本文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-精简rootfs的体积"><span class="nav-number">9.</span> <span class="nav-text">8. 精简rootfs的体积</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

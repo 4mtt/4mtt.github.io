@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="img文件," />
 
 
 
@@ -90,15 +90,17 @@
 
 
 
+<meta name="description" content="创建空白镜像文件 sudo dd if=/dev/zero of=rootfs_ext4.img bs=1k count=8196 dd:用于创建一个单个镜像文件     if=/dev/zero:将来创建的单个镜像文件里面的内容全部来自设备/dev/zero     of=rootfs_ext4.img:指定镜像名且此文件填充全0     bs=1k:生成的rootfs_ext4.img以块为单">
+<meta name="keywords" content="img文件">
 <meta property="og:type" content="article">
-<meta property="og:title" content="端午安康">
-<meta property="og:url" content="http://www.4mtt.me/2017/05/30/端午安康/index.html">
+<meta property="og:title" content="制作img文件">
+<meta property="og:url" content="http://www.4mtt.me/2017/05/31/制作img文件/index.html">
 <meta property="og:site_name" content="4mtt">
-<meta property="og:image" content="http://oqlam1imo.bkt.clouddn.com/duanwu.jpg">
-<meta property="og:updated_time" content="2017-05-30T09:41:25.621Z">
+<meta property="og:description" content="创建空白镜像文件 sudo dd if=/dev/zero of=rootfs_ext4.img bs=1k count=8196 dd:用于创建一个单个镜像文件     if=/dev/zero:将来创建的单个镜像文件里面的内容全部来自设备/dev/zero     of=rootfs_ext4.img:指定镜像名且此文件填充全0     bs=1k:生成的rootfs_ext4.img以块为单">
+<meta property="og:updated_time" content="2017-05-31T11:34:12.414Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="端午安康">
-<meta name="twitter:image" content="http://oqlam1imo.bkt.clouddn.com/duanwu.jpg">
+<meta name="twitter:title" content="制作img文件">
+<meta name="twitter:description" content="创建空白镜像文件 sudo dd if=/dev/zero of=rootfs_ext4.img bs=1k count=8196 dd:用于创建一个单个镜像文件     if=/dev/zero:将来创建的单个镜像文件里面的内容全部来自设备/dev/zero     of=rootfs_ext4.img:指定镜像名且此文件填充全0     bs=1k:生成的rootfs_ext4.img以块为单">
 
 
 
@@ -126,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://www.4mtt.me/2017/05/30/端午安康/"/>
+  <link rel="canonical" href="http://www.4mtt.me/2017/05/31/制作img文件/"/>
 
 
 
 
 
-  <title>端午安康 | 4mtt</title>
+  <title>制作img文件 | 4mtt</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -252,7 +254,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.4mtt.me/2017/05/30/端午安康/">
+    <link itemprop="mainEntityOfPage" href="http://www.4mtt.me/2017/05/31/制作img文件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -269,7 +271,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">端午安康</h1>
+          <h1 class="post-title" itemprop="name headline">制作img文件</h1>
         
 
         <div class="post-meta">
@@ -281,8 +283,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-30T00:00:00+08:00">
-                2017-05-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-31T00:00:00+08:00">
+                2017-05-31
               </time>
             
 
@@ -304,8 +306,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
+                  <a href="/categories/嵌入式/" itemprop="url" rel="index">
+                    <span itemprop="name">嵌入式</span>
                   </a>
                 </span>
 
@@ -338,10 +340,40 @@
       
 
       
-        <center><img src="http://oqlam1imo.bkt.clouddn.com/duanwu.jpg" alt=""></center>
+        <h2 id="创建空白镜像文件"><a href="#创建空白镜像文件" class="headerlink" title="创建空白镜像文件"></a>创建空白镜像文件</h2><ul>
+<li><font color="#ff2552" size="6px">sudo dd if=/dev/zero of=rootfs_ext4.img bs=1k count=8196</font><ul>
+<li><big>dd:用于创建一个单个镜像文件</big>    </li>
+<li><big>if=/dev/zero:将来创建的单个镜像文件里面的内容全部来自设备/dev/zero</big>    </li>
+<li><big>of=rootfs_ext4.img:指定镜像名且此文件填充全0</big>    </li>
+<li><big>bs=1k:生成的rootfs_ext4.img以块为单位,一块1024字节</big>    </li>
+<li><big>count=8196:总共8196块</big>
 
-<a id="more"></a>
-<h3 id="给老姐发”端午快乐”-老姐说端午节不能互助快乐-得说”安康-祥瑞”"><a href="#给老姐发”端午快乐”-老姐说端午节不能互助快乐-得说”安康-祥瑞”" class="headerlink" title="给老姐发”端午快乐”,老姐说端午节不能互助快乐,得说”安康,祥瑞”."></a>给老姐发”端午快乐”,老姐说端午节不能互助快乐,得说”安康,祥瑞”.</h3><p>因为端午节是个祭祀的节日，这天伍子胥被投钱塘江，曹娥救父投曹娥江，屈原投汨罗江。五月初五是个悲壮的日子，是祭祀的日子，所以不能互祝快乐，得用“祥瑞和安康”</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="格式化"><a href="#格式化" class="headerlink" title="格式化"></a>格式化</h2><ul>
+<li><font color="#ff2552" size="6px">sudo mkfs.ext4 rootfs_ext4.img</font>    </li>
+<li><big>把rootfs_ext4.img比作U盘指定的文件系统格式为ext4</big>
+
+</li>
+</ul>
+<h2 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h2><ul>
+<li><font color="#ff2552" size="6px">sudo mkdir /mnt/initrd</font>    </li>
+<li><font color="#ff2552" size="6px">sudo mount -t ext4 -o loop rootfs_ext4.img /mnt/initrd</font>    <ul>
+<li><big>挂接rootfs_ext4.img到目录/mnt/initrd,并指定文件系统类型ext4</big>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="写镜像"><a href="#写镜像" class="headerlink" title="写镜像"></a>写镜像</h2><ul>
+<li><font color="#ff2552" size="6px">sudo cp </font><font color="#002552" size="6px">/rootfs/* </font><font color="#ff2552" size="6px">/mnt/initrd -frd</font>    <ul>
+<li><big>向rootfs_ext4.img拷贝rootfs的内容</big></li>
+</ul>
+</li>
+<li><font color="#ff2552" size="6px">sudo umount /mnt/initrd</font>    </li>
+</ul>
 
       
     </div>
@@ -369,6 +401,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/img文件/" rel="tag"># img文件</a>
+          
+        </div>
+      
 
       
         
@@ -378,8 +416,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/27/计算机图像处理-画线算法/" rel="next" title="计算机图形学-画线算法">
-                <i class="fa fa-chevron-left"></i> 计算机图形学-画线算法
+              <a href="/2017/05/30/端午安康/" rel="next" title="端午安康">
+                <i class="fa fa-chevron-left"></i> 端午安康
               </a>
             
           </div>
@@ -388,8 +426,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/31/制作img文件/" rel="prev" title="制作img文件">
-                制作img文件 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/31/根文件系统添加自定义动态库/" rel="prev" title="根文件系统添加自定义动态库">
+                根文件系统添加自定义动态库 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -519,7 +557,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#给老姐发”端午快乐”-老姐说端午节不能互助快乐-得说”安康-祥瑞”"><span class="nav-number">1.</span> <span class="nav-text">给老姐发”端午快乐”,老姐说端午节不能互助快乐,得说”安康,祥瑞”.</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建空白镜像文件"><span class="nav-number">1.</span> <span class="nav-text">创建空白镜像文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#格式化"><span class="nav-number">2.</span> <span class="nav-text">格式化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载"><span class="nav-number">3.</span> <span class="nav-text">挂载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写镜像"><span class="nav-number">4.</span> <span class="nav-text">写镜像</span></a></li></ol></div>
             
 
           </div>
